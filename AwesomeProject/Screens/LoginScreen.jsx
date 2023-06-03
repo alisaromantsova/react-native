@@ -1,27 +1,50 @@
 import BackImg from "../img/BackImg.jpg";
-// import { Platform } from "react-native";
-import { StyleSheet, ImageBackground, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-export const LoginScreen = () => {
+import { Platform } from "react-native";
+import {
+  StyleSheet,
+  ImageBackground,
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+export const LoginScreen = ({ navigation }) => {
+  const signUp = () => {
+    console.log(`Email:${email};password:${password}`);
+    console.log("privet");
+  };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ImageBackground source={BackImg} style={styles.image} />
       <View style={styles.main}>
         <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 64}>
           <Text style={styles.title}>Увійти</Text>
           <View style={styles.inputContainer}>
-            <TextInput placeholder="Адреса електронної пошти" style={styles.input} />
+            <TextInput placeholder="Адреса електронної пошти" style={styles.input} value={email} onChangeText={setEmail} />
             <View style={styles.passwordCont}>
-              <TextInput placeholder="Пароль" style={styles.input} />
+              <TextInput placeholder="Пароль" style={styles.input} value={password} onChangeText={setPassword} />
               <Text style={styles.passLink}>Показати</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={signUp}>
             <Text style={styles.buttonText}>Увійти</Text>
           </TouchableOpacity>
-          <Text style={styles.loginText}>Немає акаунту? Зареєструватися</Text>
+          <Text style={styles.loginText} onPress={() => navigation.navigate("Registration")}>
+            Немає акаунту? Зареєструватися
+          </Text>
         </KeyboardAvoidingView>
       </View>
-    </>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
