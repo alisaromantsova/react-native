@@ -1,38 +1,62 @@
+import React, { useState } from "react";
 import BackImg from "../img/BackImg.jpg";
 import { Platform } from "react-native";
-import { StyleSheet, ImageBackground, Text, View, Image, TextInput, Button, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  ImageBackground,
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 export const RegistrationScreen = () => {
+  const signUp = () => {
+    console.log(`Login:${login};Email:${email};password:${password}`);
+    console.log("privet");
+  };
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <>
-      <ImageBackground
-        source={BackImg}
-        // importantForAccessibility={importantForAccessibility}
-        style={styles.image}
-      />
-      <View style={styles.main}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 64}>
-          <Text style={styles.title}>Реєстрація</Text>
-          <View style={styles.inputContainer}>
-            <TextInput placeholder="Логін" style={styles.input} />
-            <TextInput placeholder="Адреса електронної пошти" style={styles.input} />
-            <View style={styles.passwordCont}>
-              <TextInput placeholder="Пароль" style={styles.input} />
-              <Text style={styles.passLink}>Показати</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View>
+        <ImageBackground
+          source={BackImg}
+          // importantForAccessibility={importantForAccessibility}
+          style={styles.image}
+        />
+
+        <View style={styles.main}>
+          <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 64}>
+            <Text style={styles.title}>Реєстрація</Text>
+            <View style={styles.inputContainer}>
+              <TextInput placeholder="Логін" style={styles.input} value={login} onChangeText={setLogin} />
+              <TextInput placeholder="Адреса електронної пошти" style={styles.input} value={email} onChangeText={setEmail} />
+              <View style={styles.passwordCont}>
+                <TextInput placeholder="Пароль" style={styles.input} value={password} onChangeText={setPassword} />
+                <Text style={styles.passLink}>Показати</Text>
+              </View>
             </View>
-          </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Зареєстуватися</Text>
-          </TouchableOpacity>
-          <Text style={styles.loginText}>Вже є акаунт? Увійти</Text>
-        </KeyboardAvoidingView>
+            <TouchableOpacity style={styles.button} onPress={signUp}>
+              <Text style={styles.buttonText}>Зареєстуватися</Text>
+            </TouchableOpacity>
+            <Text style={styles.loginText}>Вже є акаунт? Увійти</Text>
+          </KeyboardAvoidingView>
+        </View>
       </View>
-    </>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
   main: {
     height: "100%",
-    flex: 1,
+    // flex: 1,
     justifyContent: "flex-end",
   },
   image: {
