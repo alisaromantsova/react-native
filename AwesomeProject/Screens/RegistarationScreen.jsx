@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackImg from "../img/BackImg.jpg";
 import { Platform } from "react-native";
+import { loadFonts } from "../FontLoader";
 import {
   StyleSheet,
   ImageBackground,
@@ -14,11 +15,38 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-export const RegistrationScreen = () => {
+import { useNavigation } from "@react-navigation/native";
+import { Font } from "react-native-vector-icons";
+
+export default function RegistrationScreen() {
+  const navigation = useNavigation();
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [navigation]);
+
   const signUp = () => {
-    console.log(`Login:${login};Email:${email};password:${password}`);
-    console.log("privet");
+    navigation.navigate("Home", {
+      screen: "PostsScreen",
+    });
   };
+
+  // useEffect(() => {
+  //   const loadFonts = async () => {
+  //     try {
+  //       await Font.loadAsync({
+  //         "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
+  //         "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+  //         "Roboto-Medium": require("../assets/fonts/oboto-Medium.ttf"),
+  //       });
+  //     } catch (error) {
+  //       console.log("Ошибка загрузки шрифтов:", error);
+  //     }
+  //   };
+
+  //   loadFonts();
+  // }, []);
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,15 +72,19 @@ export const RegistrationScreen = () => {
               </View>
             </View>
             <TouchableOpacity style={styles.button} onPress={signUp}>
-              <Text style={styles.buttonText}>Зареєстуватися</Text>
+              <Text style={styles.buttonText} onPress={signUp}>
+                Зареєстуватися
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.loginText}>Вже є акаунт? Увійти</Text>
+            <Text style={styles.loginText} onPress={() => navigation.navigate("Login")}>
+              Вже є акаунт? Увійти
+            </Text>
           </KeyboardAvoidingView>
         </View>
       </View>
     </TouchableWithoutFeedback>
   );
-};
+}
 const styles = StyleSheet.create({
   main: {
     height: "100%",
@@ -76,7 +108,7 @@ const styles = StyleSheet.create({
     paddingTop: 92,
   },
   title: {
-    fontFamily: "RobotoMedium",
+    // fontFamily: "Roboto Medium",
     fontSize: 48,
     fontWeight: 500,
     fontSize: 30,
@@ -93,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     backgroundColor: "#F6F6F6",
-    fontFamily: "RobotoRegular",
+    // fontFamily: "Roboto Regular",
   },
   inputContainer: {
     gap: 16,
